@@ -1,6 +1,6 @@
 
 
-const home = () => {
+const Home = () => {
   return (
     <div>
       este es mi home
@@ -8,4 +8,4 @@ const home = () => {
   )
 }
 
-export default home
+export default Home

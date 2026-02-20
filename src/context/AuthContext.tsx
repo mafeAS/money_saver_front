@@ -1,16 +1,11 @@
-import { createContext,  useEffect,  useState, type ReactNode, } from "react";
+import { createContext, useState, type ReactNode, } from "react";
+import type { User } from "@supabase/supabase-js";
+import supabase from "../services/supabase.services";
 
 
-export interface User{
-    id:number
-    name: string
-    email:string
-}
 type AuthContextType = {
-    user:User|null
-    loading:boolean
-    login:()=>void
-    logout: ()=>void
+  user: User | null
+  login: (email: string, password: string) => void
 }
 
 type AuthProviderProps = {
@@ -21,38 +16,32 @@ const AuthContext = createContext<AuthContextType>(null!)//CREAR EL CONTEXT(CANA
 
 const AuthProvider =({children}:AuthProviderProps)=>{
 
-    //ESTADO GLOBAL
+  const [user,setUser] = useState <User|null>(null)
 
-    const [user, setUser] = useState<User|null>(null)
-    const [loading, setLoading] = useState(false)
+    const login = async (email:string, password:string)=>{
+        
+      const {data, error} = await supabase.auth.signInWithPassword({
+        email,
+        password
+      })
 
-    //ACCIONES GLOBALES, TODO ESTO PODRAN ACCEDER TODOS
+      if(error){
+        throw error
+      }
 
-    const login = () => {
-     setLoading(true)
-     
-     setUser({id:2, name:"prueba",email:"prueba@pruebal.com"})
-      
+      setUser(data.user)
 
     }
 
-    useEffect(()=>{
-        console.log("usuario actualizado", user)
-      },[user])
     
-
-   const logout =()=>{
-
-   }
 
 
     return (
   <AuthContext.Provider
     value={{
       user,
-      loading,
-      login,
-      logout
+      login
+      
     }}
   >
     {children}
