@@ -1,17 +1,29 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import AuthContext from '../context/AuthContext';
-
-
-
+import { useNavigate } from "react-router-dom";
 
 const useAuth = () => {
-    const context = useContext(AuthContext)
+    
+    const {login} = useContext(AuthContext)
+    const navigate = useNavigate()
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
 
-    if(!context){
-        throw new Error("useAuth must be used inside AuthProvider")
+    const handleLoginSubmit = async(e:React.SubmitEvent<HTMLFormElement>)=>{
+        e.preventDefault();
+        try{
+            await login(email,password);
+            navigate("/");
+        }catch(error){
+        console.log(error)
+        }
     }
 
-    return context
+    return {
+        setEmail,
+        setPassword,
+        handleLoginSubmit
+    }
 }
 
 export default useAuth

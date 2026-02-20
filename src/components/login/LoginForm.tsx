@@ -1,27 +1,12 @@
-import { useState } from "react"
-import { useNavigate } from "react-router-dom"
 import useAuth from "../../hooks/useAuth"
 
 const LoginForm = () => {
 
-  const {login} = useAuth()
-  const navigate = useNavigate()
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-
-  const handleSubmit = async(e:React.SubmitEvent<HTMLFormElement>)=>{
-    e.preventDefault()
-
-    try{
-      await login(email,password)
-      navigate("/")
-    }catch(error){
-      console.log(error)
-    }
-  }
+  const { setEmail, setPassword, handleLoginSubmit } = useAuth();
+  
 
   return (
-    <form className="flex flex-col w-[60%]" onSubmit={handleSubmit}>
+    <form className="flex flex-col w-[60%]" onSubmit={handleLoginSubmit}>
 
         <div className="flex flex-col items-start">
             <label className="pb-2 pl-2 text-[#5C5C5C]">Usuario</label>
