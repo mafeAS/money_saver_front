@@ -1,13 +1,15 @@
 import useAuth from "../../hooks/useAuth"
 
+
 const LoginForm = () => {
 
   const { setEmail, setPassword, handleLoginSubmit } = useAuth();
   
 
   return (
+    
     <form className="flex flex-col w-[60%]" onSubmit={handleLoginSubmit}>
-
+      
         <div className="flex flex-col items-start">
             <label className="pb-2 pl-2 text-[#5C5C5C]">Usuario</label>
             <input className="w-[100%] bg-[#F7F7F7] py-1 px-4 rounded-4xl border border-gray-300 focus:outline-none"
@@ -40,7 +42,7 @@ const LoginForm = () => {
 
         </div>
 
-
+        
         <div className="pt-[3.2rem]">
           <input
               type="submit"
